@@ -27,8 +27,8 @@ jobs:
         run: npm ci
       - name: Build static site
         env:
-          # Project Pages: https://<user>.github.io/wedding-site/
-          NEXT_PUBLIC_BASE_PATH: /wedding-site
+          # Custom domain (theoehrings.com) serves from site root
+          NEXT_PUBLIC_BASE_PATH: ""
         run: npm run build
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
