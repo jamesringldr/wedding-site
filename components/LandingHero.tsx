@@ -147,6 +147,23 @@ export default function LandingHero() {
           <Countdown visible={settled} reduceMotion={reduceMotion} />
         </div>
       </div>
+
+      <a
+        href="#details"
+        className={`absolute right-5 bottom-5 z-20 inline-flex min-h-11 items-center justify-center rounded-2xl border-2 px-6 py-2.5 font-hero text-[clamp(1.1rem,3.85vw,1.265rem)] font-bold tracking-[0.06em] uppercase transition-opacity duration-700 sm:right-6 sm:bottom-6 ${
+          settled && !reduceMotion ? "details-pulse" : ""
+        }`}
+        style={{
+          backgroundColor: "#9ac54d",
+          borderColor: CREAM,
+          color: CREAM,
+          opacity: settled ? 1 : 0,
+          transitionTimingFunction: EASE,
+          transitionDelay: settled && !reduceMotion ? "320ms" : "0ms",
+        }}
+      >
+        Details
+      </a>
     </main>
   );
 }

@@ -59,3 +59,24 @@ h3 {
     scroll-behavior: auto !important;
   }
 }
+
+@keyframes details-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.045);
+  }
+}
+
+.details-pulse {
+  animation: details-pulse 2.4s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .details-pulse {
+    animation: none;
+  }
+}

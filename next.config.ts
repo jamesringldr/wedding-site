@@ -12,6 +12,8 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
   trailingSlash: true,
+  // Hide the Next.js "N" badge in local `next dev`
+  devIndicators: false,
   ...(basePath
     ? {
         basePath,
