@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import Countdown from "@/components/Countdown";
 
 type Phase = "enter" | "hold" | "settle";
 
@@ -142,6 +143,8 @@ export default function LandingHero() {
               Weekend
             </span>
           </h1>
+
+          <Countdown visible={settled} reduceMotion={reduceMotion} />
         </div>
       </div>
     </main>
