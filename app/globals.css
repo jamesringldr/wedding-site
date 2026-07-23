@@ -25,6 +25,7 @@
   --color-ink: var(--color-text);
   --font-sans: var(--font-body);
   --font-serif: var(--font-display);
+  --font-hero: var(--font-bebas);
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);
   --radius-lg: var(--radius-lg);
@@ -45,8 +46,16 @@ body {
 h1,
 h2,
 h3 {
-  font-family: var(--font-display), ui-serif, Georgia, serif;
   font-weight: 600;
-  color: var(--color-primary);
-  line-height: 1.2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
