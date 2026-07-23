@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Countdown from "@/components/Countdown";
+import DetailsMenu from "@/components/DetailsMenu";
 
 type Phase = "enter" | "hold" | "settle";
 
@@ -12,6 +13,7 @@ const SETTLE_MS = 1400;
 const EASE = "cubic-bezier(0.33, 0, 0.2, 1)";
 const HERO_SCALE = 3.85;
 const CREAM = "#F7F1E8";
+const MAUVE = "#d98394";
 
 type Offset = { dx: number; dy: number };
 
@@ -19,6 +21,7 @@ export default function LandingHero() {
   const [phase, setPhase] = useState<Phase>("enter");
   const [reduceMotion, setReduceMotion] = useState(false);
   const [offset, setOffset] = useState<Offset | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
   const joinRef = useRef<HTMLParagraphElement>(null);
 
   useLayoutEffect(() => {
@@ -87,7 +90,7 @@ export default function LandingHero() {
   return (
     <main className="relative min-h-dvh w-full overflow-hidden">
       <Image
-        src="/assets/LandingPage.jpg"
+        src="/assets/background.png"
         alt="Couple on the beach in Mexico"
         fill
         priority
@@ -99,7 +102,16 @@ export default function LandingHero() {
         }`}
       />
 
-      <div className="absolute inset-0 bg-[#d98394]/50" aria-hidden />
+      {/* Base wash on photo only (60%) — sits under hero text */}
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundColor: MAUVE,
+          opacity: menuOpen ? 0 : 0.6,
+          transition: reduceMotion ? undefined : `opacity 400ms ${EASE}`,
+        }}
+        aria-hidden
+      />
 
       <div className="relative z-10 flex min-h-dvh items-center justify-center px-6">
         <div className="relative w-[min(88vw,22rem)]">
@@ -148,22 +160,23 @@ export default function LandingHero() {
         </div>
       </div>
 
-      <a
-        href="#details"
-        className={`absolute right-5 bottom-5 z-20 inline-flex min-h-11 items-center justify-center rounded-2xl border-2 px-6 py-2.5 font-hero text-[clamp(1.1rem,3.85vw,1.265rem)] font-bold tracking-[0.06em] uppercase transition-opacity duration-700 sm:right-6 sm:bottom-6 ${
-          settled && !reduceMotion ? "details-pulse" : ""
-        }`}
+      {/* Menu open: 80% wash over photo + text; menu stays above */}
+      <div
+        className="absolute inset-0 z-20"
         style={{
-          backgroundColor: "#9ac54d",
-          borderColor: CREAM,
-          color: CREAM,
-          opacity: settled ? 1 : 0,
-          transitionTimingFunction: EASE,
-          transitionDelay: settled && !reduceMotion ? "320ms" : "0ms",
+          backgroundColor: MAUVE,
+          opacity: menuOpen ? 0.8 : 0,
+          pointerEvents: "none",
+          transition: reduceMotion ? undefined : `opacity 400ms ${EASE}`,
         }}
-      >
-        Details
-      </a>
+        aria-hidden
+      />
+
+      <DetailsMenu
+        visible={settled}
+        reduceMotion={reduceMotion}
+        onOpenChange={setMenuOpen}
+      />
     </main>
   );
 }
