@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+/* Design brief tokens — beach wedding, modern/minimalist */
+:root {
+  --color-primary: #d98394;
+  --color-background: #e2d9c8;
+  --color-accent-coral: #ec6530;
+  --color-accent-peach: #ffae6e;
+  --color-accent-seafoam: #84ca72;
+  --color-accent-cyan: #bfdddf;
+  --color-text: #394451;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --container-max: 1024px;
+}
+
+@theme inline {
+  --color-primary: var(--color-primary);
+  --color-background: var(--color-background);
+  --color-coral: var(--color-accent-coral);
+  --color-peach: var(--color-accent-peach);
+  --color-seafoam: var(--color-accent-seafoam);
+  --color-cyan: var(--color-accent-cyan);
+  --color-ink: var(--color-text);
+  --font-sans: var(--font-body);
+  --font-serif: var(--font-display);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display), ui-serif, Georgia, serif;
+  font-weight: 600;
+  color: var(--color-primary);
+  line-height: 1.2;
+}
