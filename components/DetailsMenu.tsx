@@ -18,7 +18,7 @@ type MenuItem = {
 /** Top → bottom; FAQs sits level with the Details / × trigger. */
 const MENU_ITEMS: MenuItem[] = [
   { label: "The Couple", href: "/couple/" },
-  { label: "Resort Info", href: "#resort" },
+  { label: "Resort Info", href: "/resort/" },
   { label: "Itinerary RSVPs", href: "#itinerary" },
   { label: "FAQs", href: "/faqs/" },
 ];
