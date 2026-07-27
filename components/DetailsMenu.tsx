@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
 
 const CREAM = "#F7F1E8";
@@ -16,10 +17,10 @@ type MenuItem = {
 
 /** Top → bottom; FAQs sits level with the Details / × trigger. */
 const MENU_ITEMS: MenuItem[] = [
-  { label: "The Couple", href: "#couple" },
+  { label: "The Couple", href: "/couple/" },
   { label: "Resort Info", href: "#resort" },
   { label: "Itinerary RSVPs", href: "#itinerary" },
-  { label: "FAQs", href: "#faqs" },
+  { label: "FAQs", href: "/faqs/" },
 ];
 
 type DetailsMenuProps = {
@@ -94,34 +95,50 @@ export default function DetailsMenu({
             const openDelay = rowsAboveTrigger * 55;
             const closeDelay = index * 55;
 
+            const linkClassName =
+              "flex min-h-11 w-full items-center justify-center rounded-2xl border-2 px-4 py-2 text-center font-hero text-[clamp(0.95rem,3.2vw,1.1rem)] font-bold tracking-[0.05em] uppercase will-change-transform";
+            const linkStyle = {
+              backgroundColor: GREEN,
+              borderColor: CREAM,
+              color: CREAM,
+              pointerEvents: open ? ("auto" as const) : ("none" as const),
+              transform: open
+                ? "translate(0, 0) rotate(0deg) scale(1)"
+                : `translate(72px, ${rowsAboveTrigger * ROW}px) rotate(-55deg) scale(0.35)`,
+              opacity: open ? 1 : 0,
+              transition: reduceMotion
+                ? undefined
+                : `transform 480ms ${EASE}, opacity 320ms ${EASE}`,
+              transitionDelay: reduceMotion
+                ? "0ms"
+                : open
+                  ? `${openDelay}ms`
+                  : `${closeDelay}ms`,
+            };
+
             return (
               <li key={item.href} className="w-full">
-                <a
-                  href={item.href}
-                  tabIndex={open ? 0 : -1}
-                  className="flex min-h-11 w-full items-center justify-center rounded-2xl border-2 px-4 py-2 text-center font-hero text-[clamp(0.95rem,3.2vw,1.1rem)] font-bold tracking-[0.05em] uppercase will-change-transform"
-                  style={{
-                    backgroundColor: GREEN,
-                    borderColor: CREAM,
-                    color: CREAM,
-                    pointerEvents: open ? "auto" : "none",
-                    transform: open
-                      ? "translate(0, 0) rotate(0deg) scale(1)"
-                      : `translate(72px, ${rowsAboveTrigger * ROW}px) rotate(-55deg) scale(0.35)`,
-                    opacity: open ? 1 : 0,
-                    transition: reduceMotion
-                      ? undefined
-                      : `transform 480ms ${EASE}, opacity 320ms ${EASE}`,
-                    transitionDelay: reduceMotion
-                      ? "0ms"
-                      : open
-                        ? `${openDelay}ms`
-                        : `${closeDelay}ms`,
-                  }}
-                  onClick={() => setOpen(false)}
-                >
-                  {item.label}
-                </a>
+                {item.href.startsWith("#") ? (
+                  <a
+                    href={item.href}
+                    tabIndex={open ? 0 : -1}
+                    className={linkClassName}
+                    style={linkStyle}
+                    onClick={() => setOpen(false)}
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <Link
+                    href={item.href}
+                    tabIndex={open ? 0 : -1}
+                    className={linkClassName}
+                    style={linkStyle}
+                    onClick={() => setOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                )}
               </li>
             );
           })}
