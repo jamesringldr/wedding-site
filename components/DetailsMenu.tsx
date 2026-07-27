@@ -19,7 +19,7 @@ type MenuItem = {
 const MENU_ITEMS: MenuItem[] = [
   { label: "The Couple", href: "/couple/" },
   { label: "Resort Info", href: "/resort/" },
-  { label: "Itinerary RSVPs", href: "#itinerary" },
+  { label: "Itinerary RSVPs", href: "/itinerary/" },
   { label: "FAQs", href: "/faqs/" },
 ];
 
