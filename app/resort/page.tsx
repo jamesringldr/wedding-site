@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import ResortCarousel from "@/components/ResortCarousel";
+import ResortReserveDrawer from "@/components/ResortReserveDrawer";
 import {
   RESORT_HERO_IMAGE,
   RESORT_HIGHLIGHTS,
@@ -34,7 +35,7 @@ export default function ResortPage() {
         }}
       />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-[1100px] flex-col px-6 pt-8 pb-16 sm:px-8 sm:pt-10 sm:pb-24">
+      <div className="relative z-10 mx-auto flex w-full max-w-[1100px] flex-col px-6 pt-8 pb-40 sm:px-8 sm:pt-10 sm:pb-44">
         <Link
           href="/"
           className="mb-10 inline-flex min-h-11 w-fit items-center gap-2 font-hero text-[0.95rem] tracking-[0.06em] text-ink/70 uppercase transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-seafoam"
@@ -122,6 +123,8 @@ export default function ResortPage() {
           </a>
         </section>
       </div>
+
+      <ResortReserveDrawer reserveUrl={RESORT_OFFICIAL_URL} />
     </main>
   );
 }
