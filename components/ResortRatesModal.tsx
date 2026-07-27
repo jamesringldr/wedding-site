@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
+import { buildResortBookingUrl } from "@/lib/resortBooking";
 
 const MAUVE = "#d98394";
 const SAND = "#e2d9c8";
@@ -38,7 +39,6 @@ const selectClassName =
 type ResortRatesModalProps = {
   open: boolean;
   onClose: () => void;
-  reserveUrl: string;
 };
 
 function GuestStepper({
@@ -89,7 +89,6 @@ function GuestStepper({
 export default function ResortRatesModal({
   open,
   onClose,
-  reserveUrl,
 }: ResortRatesModalProps) {
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(0);
@@ -128,7 +127,13 @@ export default function ResortRatesModal({
   if (!open) return null;
 
   const handleCheckRates = () => {
-    window.open(reserveUrl, "_blank", "noopener,noreferrer");
+    const url = buildResortBookingUrl({
+      checkIn,
+      checkOut,
+      adults,
+      children,
+    });
+    window.open(url, "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -149,7 +154,7 @@ export default function ResortRatesModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
-        className="relative z-10 max-h-[min(92dvh,720px)] w-full max-w-md overflow-y-auto rounded-2xl p-6 shadow-[0_18px_50px_rgba(57,68,81,0.28)] sm:rounded-3xl sm:p-8"
+        className="relative z-10 max-h-[min(92dvh,720px)] w-full max-w-md overflow-y-auto rounded-2xl p-6 shadow-[0_18px_50px_rgba(57,68,81,0.28)] [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden sm:rounded-3xl sm:p-8"
         style={{
           backgroundColor: SAND,
           color: INK,

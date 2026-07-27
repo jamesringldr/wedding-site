@@ -124,7 +124,7 @@ export default function ResortPage() {
         </section>
       </div>
 
-      <ResortReserveDrawer reserveUrl={RESORT_OFFICIAL_URL} />
+      <ResortReserveDrawer />
     </main>
   );
 }

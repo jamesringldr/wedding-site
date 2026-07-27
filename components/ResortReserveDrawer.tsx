@@ -9,13 +9,7 @@ const GREEN = "#9ac54d";
 const EASE = "cubic-bezier(0.33, 0, 0.2, 1)";
 const DELAY_MS = 2000;
 
-type ResortReserveDrawerProps = {
-  reserveUrl: string;
-};
-
-export default function ResortReserveDrawer({
-  reserveUrl,
-}: ResortReserveDrawerProps) {
+export default function ResortReserveDrawer() {
   const [visible, setVisible] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(false);
   const [ratesOpen, setRatesOpen] = useState(false);
@@ -82,11 +76,7 @@ export default function ResortReserveDrawer({
         </div>
       </aside>
 
-      <ResortRatesModal
-        open={ratesOpen}
-        onClose={() => setRatesOpen(false)}
-        reserveUrl={reserveUrl}
-      />
+      <ResortRatesModal open={ratesOpen} onClose={() => setRatesOpen(false)} />
     </>
   );
 }
