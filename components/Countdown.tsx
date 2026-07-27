@@ -39,21 +39,22 @@ export default function Countdown({
   visible,
   reduceMotion = false,
 }: CountdownProps) {
-  const [now, setNow] = useState(() => Date.now());
+  // null until mount — avoids SSR/client clock mismatch hydration errors
+  const [time, setTime] = useState<TimeLeft | null>(null);
 
   useEffect(() => {
-    const id = window.setInterval(() => setNow(Date.now()), 1000);
+    const tick = () => setTime(getTimeLeft(WEDDING_WEEKEND_START, Date.now()));
+    tick();
+    const id = window.setInterval(tick, 1000);
     return () => window.clearInterval(id);
   }, []);
-
-  const time = getTimeLeft(WEDDING_WEEKEND_START, now);
 
   return (
     <div
       className="mt-5 grid w-full grid-cols-4 gap-x-3"
       style={{
         color: CREAM,
-        opacity: visible ? 1 : 0,
+        opacity: visible && time ? 1 : 0,
         transform: visible ? "translateY(0)" : "translateY(0.75rem)",
         transition: reduceMotion
           ? undefined
@@ -68,7 +69,7 @@ export default function Countdown({
           className="min-w-0 text-center font-hero font-bold uppercase"
         >
           <div className="text-[clamp(2.0125rem,8.625vw,2.7025rem)] leading-none tracking-[0.02em] tabular-nums">
-            {time[key]}
+            {time ? time[key] : "–"}
           </div>
           <div className="mt-1.5 text-[clamp(0.75rem,3vw,0.92rem)] leading-none tracking-[0.08em]">
             {label}
