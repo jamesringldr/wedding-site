@@ -16,16 +16,6 @@ export const FAQS: FaqItem[] = [
       "All meals, snacks, and drinks (including alcohol) are included and unlimited. There are many restaurants, a food truck, bars and lounges, and 24-hour room service. Plenty of activities for adults and kids are included at no extra charge. Visit the Finest Playa Mujeres website or download The Excellence Collection app to see daily and nightly activities and entertainment.",
   },
   {
-    question: "Are children welcome to the wedding?",
-    answer:
-      "While we love your little ones, to stay within the capacity allowed for our wedding venue we are only allowing children of immediate family and the wedding party to attend. We apologize for the inconvenience and appreciate your understanding.",
-  },
-  {
-    question: "Can I bring a guest?",
-    answer:
-      "We would love to have more guests, but we're limited by venue capacity. Please refer to your invitation or RSVP form. You're welcome to travel with a friend who can stay with you at the resort — just a friendly reminder that they will not be able to attend the wedding events. Thank you for understanding.",
-  },
-  {
     question: "What are the differences between rooms?",
     answer:
       "There are three suite levels: Finest suites, Finest Club suites, and Excellence Club suites. Suites with “Club” in the name include special perks such as a complimentary aqua hydrotherapy circuit at the spa, access to additional club restaurants, club pools and beach areas, upgraded premium liquor in your suite, private check-in and check-out, early check-in and late check-out based on availability, fresh flowers and wine on arrival, an upgraded room-service menu, and other perks listed on the Finest website under the Club option. Finest Club suites are family-friendly. Excellence Club suites are adult-only (18+), no exceptions.",
@@ -34,6 +24,11 @@ export const FAQS: FaqItem[] = [
     question: "When should I arrive and depart?",
     answer:
       "You're welcome to stay as long as you like, but the resort requires a 3-night minimum stay. Our discounted promo code rates are valid for check-in and check-out between June 9 and June 16, 2027. To join all wedding events (Boat Day on June 10, Welcome Party on June 11, and Ceremony on June 12), we recommend arriving no later than June 10.",
+  },
+  {
+    question: "Is there transportation between the airport and the resort?",
+    answer:
+      "Yes — transportation is included with the group rate and will be arranged closer to check-in.",
   },
   {
     question: "When should I book my room?",
