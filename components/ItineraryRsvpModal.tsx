@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useId, useRef, useState, type FormEvent } from "react";
+import { submitRsvp } from "@/lib/rsvp";
 
 const MAUVE = "#d98394";
 const SAND = "#e2d9c8";
@@ -81,6 +82,8 @@ export default function ItineraryRsvpModal({
     ceremony: true,
   });
   const [roomReserved, setRoomReserved] = useState<RoomReserved | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [reduceMotion, setReduceMotion] = useState(false);
   const closeRef = useRef<HTMLButtonElement>(null);
   const titleId = useId();
@@ -104,6 +107,8 @@ export default function ItineraryRsvpModal({
     setGuests(["", ""]);
     setEvents({ boatDay: true, welcomeParty: true, ceremony: true });
     setRoomReserved(null);
+    setSubmitting(false);
+    setSubmitError(null);
 
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -122,26 +127,67 @@ export default function ItineraryRsvpModal({
 
   if (!open) return null;
 
-  const handleDeclineSubmit = (event: FormEvent) => {
+  const handleDeclineSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    onClose();
+    setSubmitError(null);
+    setSubmitting(true);
+    try {
+      await submitRsvp({
+        status: "declined",
+        fullName: fullName.trim(),
+      });
+      onClose();
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : "Could not save your RSVP. Please try again.",
+      );
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handleAttendingNext = (event: FormEvent) => {
     event.preventDefault();
+    setSubmitError(null);
     setStep("guests");
   };
 
   const handleGuestsNext = (event: FormEvent) => {
     event.preventDefault();
+    setSubmitError(null);
     setStep("events");
   };
 
-  const handleEventsSubmit = (event: FormEvent) => {
+  const handleEventsSubmit = async (event: FormEvent) => {
     event.preventDefault();
     if (!roomReserved) return;
-    // Persist later
-    setStep("saved");
+
+    setSubmitError(null);
+    setSubmitting(true);
+    try {
+      await submitRsvp({
+        status: "attending",
+        partyName: partyName.trim(),
+        email: email.trim(),
+        phone: phone.trim(),
+        guests: guests.map((guest) => guest.trim()).filter(Boolean),
+        boatDay: events.boatDay,
+        welcomeParty: events.welcomeParty,
+        ceremony: events.ceremony,
+        roomReserved,
+      });
+      setStep("saved");
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : "Could not save your RSVP. Please try again.",
+      );
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const updateGuest = (index: number, value: string) => {
@@ -238,12 +284,18 @@ export default function ItineraryRsvpModal({
                 placeholder="Your full name"
               />
             </label>
+            {submitError ? (
+              <p className="mt-4 m-0 text-[0.95rem] leading-relaxed text-primary" role="alert">
+                {submitError}
+              </p>
+            ) : null}
             <button
               type="submit"
-              className={`mt-8 ${primaryButtonClassName}`}
+              disabled={submitting}
+              className={`mt-8 ${primaryButtonClassName} disabled:opacity-60`}
               style={primaryButtonStyle}
             >
-              Submit
+              {submitting ? "Saving…" : "Submit"}
             </button>
           </form>
         ) : null}
@@ -429,12 +481,18 @@ export default function ItineraryRsvpModal({
               </div>
             </fieldset>
 
+            {submitError ? (
+              <p className="mt-4 m-0 text-[0.95rem] leading-relaxed text-primary" role="alert">
+                {submitError}
+              </p>
+            ) : null}
             <button
               type="submit"
-              className={`mt-8 ${primaryButtonClassName}`}
+              disabled={submitting || !roomReserved}
+              className={`mt-8 ${primaryButtonClassName} disabled:opacity-60`}
               style={primaryButtonStyle}
             >
-              Submit
+              {submitting ? "Saving…" : "Submit"}
             </button>
           </form>
         ) : null}

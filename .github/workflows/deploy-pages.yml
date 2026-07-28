@@ -29,6 +29,7 @@ jobs:
         env:
           # Custom domain (theoehrings.com) serves from site root
           NEXT_PUBLIC_BASE_PATH: ""
+          NEXT_PUBLIC_RSVP_WEB_APP_URL: ${{ vars.NEXT_PUBLIC_RSVP_WEB_APP_URL }}
         run: npm run build
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
